@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# URL Shortener
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple and efficient URL Shortener web application developed using **Spring Boot** for the backend, **React.js** for the frontend, and **MySQL** for data storage. The frontend is styled using **Tailwind CSS**.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Generate Short URLs**: Convert long URLs into short, shareable links.
+- **Redirect to Original URL**: Access the original URL when visiting a short link.
+- **Database Storage**: Stores URL mappings in MySQL.
+- **API Support**: Backend provides RESTful APIs for URL management.
+- **Minimal UI**: A simple and clean user interface for quick link generation.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React.js
+- Tailwind CSS
+- Axios (for API requests)
 
-### `npm test`
+### Backend:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- MySQL Database
 
-### `npm run build`
+### Other Tools:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Postman (for API testing)
+- Git & GitHub (version control)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation & Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites:
 
-### `npm run eject`
+- Java (JDK 17 or latest)
+- Node.js & npm
+- MySQL Database
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Steps:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Configure MySQL Database in `application.properties`:
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/urlshortener
+   spring.datasource.username=root
+   spring.datasource.password=yourpasswordFrontend (React.js):
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1) Navigate to the frontend directory:
+   ```sh
+   cd url-shortener/frontend
+   ```
+2) Install dependencies:
+   ```sh
+   npm install
+   ```
+3) Start the development server:
+   ```sh
+   npm start
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## API Endpoints
 
-## Learn More
+| Method | Endpoint           | Description              |
+| ------ | ------------------ | ------------------------ |
+| POST   | `/api/shorten`     | Shorten a long URL       |
+| GET    | `/api/{shortCode}` | Redirect to original URL |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contribution
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Feel free to contribute! Fork the repo, make changes, and submit a pull request.
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This project is open-source and available under the MIT License.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
