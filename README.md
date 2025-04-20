@@ -38,6 +38,13 @@ A simple and efficient URL Shortener web application developed using **Spring Bo
 - Node.js & npm
 - MySQL Database
 
+
+### Deployment
+
+- Frontend Deployed on Vercel: The React.js frontend is live at Vercel. It demonstrates deployment proficiency using Vercel’s seamless CI/CD workflows.
+
+- Backend: The Spring Boot backend is ready for deployment but is currently not integrated with the live frontend deployment. This separation highlights independent deployment skills.
+
 ### Steps:
 
 1. Configure MySQL Database in `application.properties`:
