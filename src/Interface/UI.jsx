@@ -1,21 +1,54 @@
-import { Button, FormControl, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Button,
+  FormControl,
+  TextField,
+  Typography,
+  Card,
+  CardContent,
+  Fade,
+  Slide
+} from '@mui/material';
+import { styled, keyframes } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirecter, shortUrl } from '../Redux/Action';
+import { shortUrl, Redirecter } from '../Redux/Action';
+import background from '../assets/transparent-bg.png';
+
+
+const marquee = keyframes`
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+`;
+
+
+const MarqueeText = styled(Typography)(({ theme }) => ({
+  display: 'inline-block',
+  whiteSpace: 'nowrap',
+  animation: `${marquee} 15s linear infinite`,
+  fontWeight: theme.typography.fontWeightBold,
+  color: theme.palette.primary.main,
+  marginBottom: theme.spacing(2),
+}));
 
 const UI = () => {
   const [url, setUrl] = useState('');
   const [warning, setWarning] = useState('');
+  const [showCard, setShowCard] = useState(false);
+
   const dispatch = useDispatch();
-  const shortenedUrl = useSelector((state) => state.url.url);
-  const loading = useSelector((state) => state.url.loading);
-  const error = useSelector((state) => state.url.error);
+  const { url: shortenedUrl, loading, error } = useSelector((state) => state.url);
+
+
+  useEffect(() => {
+    setShowCard(true);
+  }, []);
 
   const urlChecker = () => {
-    if (url.length > 2048) { 
-      setWarning('URL is too long. Please enter a valid URL within 2048 characters.');
-    } else if(!(url.includes('http://') || url.includes('https://'))) {
-      setWarning('Please enter a valid URL starting with http or https');
+    if (url.length > 2048) {
+      setWarning('URL is too long. Please keep it under 2048 characters.');
+    } else if (!/^https?:\/\//.test(url)) {
+      setWarning('URL must start with http:// or https://');
     } else {
       setWarning('');
       dispatch(shortUrl(url));
@@ -23,8 +56,8 @@ const UI = () => {
   };
 
   const urlRedirecter = () => {
-    if (!url.includes('P18')) {
-      setWarning('Please enter a valid Short URL starting with P18');
+    if (!url.startsWith('P18')) {
+      setWarning('Short URL must start with “P18”');
     } else {
       setWarning('');
       dispatch(Redirecter(url));
@@ -32,52 +65,130 @@ const UI = () => {
   };
 
   return (
-    <div  className='flex flex-col items-center p-6'>
-      <div className='mt-10'>
-        <h1 className='text-red-700 text-3xl font-bold'>Welcome to URL Shortener Application ✨</h1>
-      </div>
-      <div className='w-full max-w-md mt-6'>
-        <FormControl className='flex flex-col items-center gap-6'>
-          <div className='flex flex-col w-full'>
-            <h2 className='text-lg'>Enter URL:</h2>
-            <TextField
-              className='border-2 border-cyan-300 w-full mt-2'
-              variant='outlined'
-              placeholder='Enter your URL here'
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-            />
-            {warning && <p className='text-red-500 mt-2'>{warning}</p>}
-          </div>
-          <Button
-            variant='contained'
-            className='flex w-full bg-blue-500 text-white mt-4 py-2'
-            onClick={urlChecker}
-            disabled={loading}
-          >
-            {loading ? 'Submitting...' : 'Submit'}
-          </Button>
-          <Button
-            variant='contained'
-            className='flex w-full bg-blue-500 text-white mt-4 py-2'
-            onClick={urlRedirecter}
-          >
-            Redirect
-          </Button>
-          <div className='flex flex-col w-full'>
-            <h2 className='text-lg'>Result:</h2>
-            <TextField
-              className='border-2 border-cyan-300 w-full mt-2'
-              variant='outlined'
-              placeholder='Shortened URL will appear here'
-              value={shortenedUrl || ''}
-              
-            />
-            {error && <p className='text-red-500 mt-2'>{error}</p>}
-          </div>
-        </FormControl>
-      </div>
-    </div>
+    <Box
+      component="main"
+      sx={{
+        minHeight: '100vh',
+        py: 6,
+        px: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+     
+      <MarqueeText variant="h6" transform="blink">
+        Tip: Paste your long URL (http/https) or short code (P18…) above, then click Shorten or Redirect!
+      </MarqueeText>
+
+      
+      <Fade in={showCard} timeout={800}>
+        <Card
+          sx={{
+            width: '100%',
+            maxWidth: 600,
+            bgcolor: 'rgba(255,255,255,0.85)',
+            boxShadow: 4,
+            borderRadius: 3,
+            transform: showCard ? 'scale(1)' : 'scale(0.95)',
+            transition: 'transform 0.3s ease-in-out',
+          }}
+        >
+          <CardContent sx={{ p: 4 }}>
+            <Typography variant="h3" align="center" color="primary" gutterBottom>
+              URL Shortener ✨
+            </Typography>
+
+            <Typography variant="body1" align="center" mb={4}>
+              Enter a long URL to shorten it, or paste your P18… code and hit Redirect.
+            </Typography>
+
+            <FormControl fullWidth sx={{ gap: 3 }}>
+              {/* Input */}
+              <Box>
+                <Typography variant="h6">Your URL / Short Code</Typography>
+                <TextField
+                  placeholder="https://example.com or P181234XYZ"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  fullWidth
+                  sx={{ mt: 1 }}
+                  inputProps={{ 'aria-label': 'URL or short code input' }}
+                />
+                {warning && (
+                  <Typography color="error" sx={{ mt: 1 }}>
+                    {warning}
+                  </Typography>
+                )}
+              </Box>
+
+             
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  gap: 2,
+                  mt: 1,
+                }}
+              >
+                <Slide in={showCard} direction="left">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={urlChecker}
+                    disabled={loading}
+                    fullWidth
+                    sx={{ py: 1.5 }}
+                  >
+                    {loading ? 'Submitting…' : 'Shorten'}
+                  </Button>
+                </Slide>
+
+                <Slide in={showCard} direction="right">
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={urlRedirecter}
+                    fullWidth
+                    sx={{ py: 1.5 }}
+                  >
+                    Redirect
+                  </Button>
+                </Slide>
+              </Box>
+ 
+              <Box sx={{ mt: 4 }}>
+                <Typography variant="h6">Result</Typography>
+                <TextField
+                  value={shortenedUrl || ''}
+                  placeholder="Your shortened URL will appear here"
+                  fullWidth
+                  sx={{ mt: 1 }}
+                  InputProps={{ readOnly: true, 'aria-label': 'Shortened URL output' }}
+                />
+                {error && (
+                  <Typography color="error" sx={{ mt: 1 }}>
+                    {error}
+                  </Typography>
+                )}
+              </Box>
+
+              <Typography
+                variant="caption"
+                align="center"
+                color="textSecondary"
+                sx={{ mt: 3, display: 'block' }}
+              >
+                To **redirect**, paste your code (e.g. <strong>P181234XYZ</strong>) above and click Redirect.
+              </Typography>
+            </FormControl>
+          </CardContent>
+        </Card>
+      </Fade>
+    </Box>
   );
 };
 
