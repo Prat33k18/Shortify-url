@@ -28,7 +28,7 @@ export const Redirecter = (shortcode) => async (dispatch) => {
 
   try {
       const redirectUrl = `http://localhost:8787/redirect/${shortcode}`;
-      window.open(redirectUrl, "_blank"); 
+      window.location.href(redirectUrl); 
 
       dispatch({ type: GET_OG_URL_SUCCESS, payload: redirectUrl });
   } catch (error) {
