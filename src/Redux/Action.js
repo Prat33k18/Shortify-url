@@ -27,7 +27,7 @@ export const Redirecter = (shortcode) => async (dispatch) => {
   console.log("Redirecter Initiated");
 
   try {
-      const redirectUrl = `http://localhost:8787/redirect/${shortcode}`;
+     const redirectUrl = `${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8787'}/redirect/${shortcode}`;
       window.location.href = redirectUrl; 
 
       dispatch({ type: GET_OG_URL_SUCCESS, payload: redirectUrl });
