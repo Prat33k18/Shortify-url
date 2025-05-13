@@ -49,9 +49,9 @@ A simple and efficient URL Shortener web application developed using **Spring Bo
 
 1. Configure MySQL Database in `application.properties`:
    ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/urlshortener
-   spring.datasource.username=root
-   spring.datasource.password=yourpasswordFrontend (React.js):
+   spring.datasource.url=jdbc:mysql://localhost:3306/urlshortener(u can create any named db and give that name here )
+   spring.datasource.username=your userName
+   spring.datasource.password=yourpassword
    ```
 
 1) Navigate to the frontend directory:
