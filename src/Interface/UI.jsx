@@ -80,11 +80,15 @@ const UI = () => {
       }}
     >
 
-      <div className="w-full overflow-hidden">
-      <MarqueeText variant="h6" transform="blink">
-        Tip: Paste your long URL (http/https) or short code (P18…) above, then click Shorten or Redirect!
-      </MarqueeText>
-      </div>
+    <Box 
+    sx={{ width: '100%', overflowX: 'hidden', 
+           display: 'block' 
+     }}
+     >
+    <MarqueeText variant="h6">
+    Tip: Paste your long URL (http/https) or short code (P18…) above, then click Shorten or Redirect!
+     </MarqueeText>
+     </Box>
       
       <Fade in={showCard} timeout={800}>
         <Card
