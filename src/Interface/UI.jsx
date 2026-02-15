@@ -79,11 +79,12 @@ const UI = () => {
         backgroundPosition: 'center',
       }}
     >
-     
+
+      <div className="w-full overflow-hidden">
       <MarqueeText variant="h6" transform="blink">
         Tip: Paste your long URL (http/https) or short code (P18…) above, then click Shorten or Redirect!
       </MarqueeText>
-
+      </div>
       
       <Fade in={showCard} timeout={800}>
         <Card
